@@ -3,33 +3,33 @@ package nvacheishvili;
 import ks.common.games.Solitaire;
 import ks.common.model.Card;
 import ks.common.model.Column;
+import ks.common.model.Move;
 import ks.common.model.Pile;
 
-public class MoveCardTableauToTableau {
+public class MoveCardTableauToTableau extends Move{
 	Column source, target; 
 	Card cardBeingDragged;
-	MoveCardTableauToTableau(Column a, Column b, Card c){
+	public MoveCardTableauToTableau(Column a, Column b, Card c){
 		this.source = a;
 		this.target = b;
 		this.cardBeingDragged =c;
 	}
 
-	boolean doMove(Solitaire a){
+	public boolean doMove(Solitaire a){
 		if(!valid(a)){
 			return false;
 		}
-		Card c = source.get();
-		target.add(c);
+		target.add(cardBeingDragged);
 		return true;
 	}
 	
-	boolean undo(Solitaire a){
-		Card c = target.get();
-		source.add(c);
+	public boolean undo(Solitaire a){
+		source.add(cardBeingDragged);
+		target.get();
 		return true;
 	}
 	
-	boolean valid(Solitaire a){
+	public boolean valid(Solitaire a){
 		if(target.empty()){
 			return true;
 		}
