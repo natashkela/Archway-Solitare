@@ -4,15 +4,18 @@ import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import heineman.Klondike;
+import heineman.klondike.KlondikeDeckController;
 import ks.client.gamefactory.GameWindow;
+import ks.common.controller.SolitaireMouseMotionAdapter;
 import ks.common.games.Solitaire;
+import ks.common.games.SolitaireUndoAdapter;
 import ks.common.model.*;
 import ks.common.view.*;
 import ks.launcher.Main;
 
 public class Archway extends Solitaire{
 	//int num;
-	MultiDeck multiDeck;//104 cards needed 
+	 public MultiDeck multiDeck;//104 cards needed 
 	//-----------------------reservePiles------------------------------------
 	//for reserve cards create 13 piles
 	Pile reservePiles[] = new Pile[13];
@@ -194,6 +197,69 @@ public class Archway extends Solitaire{
 	}
 	private void initializeControllers() {
 		// TODO Auto-generated method stub
+		//for columns to move to foundations
+		for(int i=0;i<4;i++){
+			columnView[i].setMouseAdapter(new ArchwayColumnController (this, columnView[i]));
+			columnView[i].setMouseMotionAdapter (new SolitaireMouseMotionAdapter(this));
+			columnView[i].setUndoAdapter (new SolitaireUndoAdapter(this));
+		}
+		//to move to from column to ace foundations
+		for(int i=0;i<4;i++){
+			aceView[i].setMouseAdapter(new AceFoundationController (this, aceView[i]));
+			aceView[i].setMouseMotionAdapter (new SolitaireMouseMotionAdapter(this));
+			aceView[i].setUndoAdapter (new SolitaireUndoAdapter(this));
+		}
+		
+		//to move to from column to king foundations
+		for(int i=0;i<4;i++){
+			kingView[i].setMouseAdapter(new KingFoundationController (this, kingView[i]));
+			kingView[i].setMouseMotionAdapter (new SolitaireMouseMotionAdapter(this));
+			kingView[i].setUndoAdapter (new SolitaireUndoAdapter(this));
+		}
+		//For reserve to foundations
+		for(int i=0;i<13;i++){
+			reserveView[i].setMouseAdapter(new reserveController(this,reserveView[i]));
+			reserveView[i].setMouseMotionAdapter (new SolitaireMouseMotionAdapter(this));
+			reserveView[i].setUndoAdapter (new SolitaireUndoAdapter(this));
+		}
+		
+		/*
+		 * To move from reserve to ace
+		for(int i=0;i<4;i++){
+			aceView[i].setMouseAdapter(new AceFoundationFromReserveController (this, aceView[i]));
+			aceView[i].setMouseMotionAdapter (new SolitaireMouseMotionAdapter(this));
+			aceView[i].setUndoAdapter (new SolitaireUndoAdapter(this));
+		}
+		* To move from reserve to king	
+		for(int i=0;i<4;i++){
+			kingView[i].setMouseAdapter(new KingFoundationToReserveController (this, kingView[i]));
+			kingView[i].setMouseMotionAdapter (new SolitaireMouseMotionAdapter(this));
+			kingView[i].setUndoAdapter (new SolitaireUndoAdapter(this));
+		}
+		*/
+		
+		//For columns to move to other columns
+		/*
+		for(int i=0;i<4;i++){
+			columnView[i].setMouseAdapter(new ColumnMoveController (this, columnView[i]));
+			columnView[i].setMouseMotionAdapter (new SolitaireMouseMotionAdapter(this));
+			columnView[i].setUndoAdapter (new SolitaireUndoAdapter(this));
+		}
+		
+		for(int i=0;i<4;i++){
+			columnView[i].setMouseAdapter(new ColumnToColumnController (this, columnView[i]));
+			columnView[i].setMouseMotionAdapter (new SolitaireMouseMotionAdapter(this));
+			columnView[i].setUndoAdapter (new SolitaireUndoAdapter(this));
+		}
+		*/
+		
+		//To move from reserve to column
+		/* for(int i=0;i<13;i++){
+			reserveView[i].setMouseAdapter(new ReserveToColumnController(this,reserveView[i]));
+			reserveView[i].setMouseMotionAdapter (new SolitaireMouseMotionAdapter(this));
+			reserveView[i].setUndoAdapter (new SolitaireUndoAdapter(this));
+		}*/
+		
 		
 	}
 
